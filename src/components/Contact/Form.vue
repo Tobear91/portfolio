@@ -5,21 +5,22 @@ import Button from "../Core/Button.vue";
 
 <template>
   <form class="row">
+    <input type="text" name="company" style="display: none" />
     <div class="col">
-      <label for="name" class="form-label">Nom *</label>
-      <input type="text" class="form-control" id="name" autocomplete="off" />
+      <label for="name" class="form-label">Contact *</label>
+      <input type="text" class="form-control" id="name" autocomplete="off" name="name" required />
     </div>
     <div class="col">
       <label for="email" class="form-label">Email *</label>
-      <input type="email" class="form-control" id="email" autocomplete="off" />
+      <input type="email" class="form-control" id="email" autocomplete="off" name="email" required />
     </div>
     <div class="col-12">
       <label for="subject" class="form-label">Sujet *</label>
-      <input type="text" class="form-control" id="subject" autocomplete="off" />
+      <input type="text" class="form-control" id="subject" autocomplete="off" name="subject" required />
     </div>
     <div class="col-12">
       <label for="message" class="form-label">Message *</label>
-      <textarea class="form-control" id="message" rows="3"></textarea>
+      <textarea class="form-control" id="message" rows="3" name="message" required></textarea>
     </div>
     <div class="col-12">
       <Button type="submit" :icon="faEnvelope" :style="`cta`">Send Message</Button>

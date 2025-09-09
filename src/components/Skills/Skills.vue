@@ -47,7 +47,7 @@ const datas = [
       <p class="col-12 col-sm-8 col-lg-6">Crafting digital experiences that blend beautiful design with robust functionality. 5+ years building scalable web applications.</p>
     </div>
     <div class="row justify-content-center skills">
-      <SkillsItem v-for="(skill, index) in datas" :key="index" class="col-11 col-md-5 col-xl-3 mb-4" :datas="skill" />
+      <SkillsItem v-for="(skill, index) in datas" :key="index" class="col-11 col-md-5 col-lg-3 mb-4" :datas="skill" />
     </div>
   </section>
 </template>

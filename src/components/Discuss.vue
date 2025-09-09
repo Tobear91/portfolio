@@ -6,7 +6,7 @@ import Link from "./Core/Link.vue";
 <template>
   <section class="container-fluid">
     <div class="row justify-content-center">
-      <div class="col-10 col-md-9 col-lg-7 inner">
+      <div class="col-10 col-md-9 col-lg-7 col-xl-5 inner">
         <h2>Ready to Discuss Your Project?</h2>
         <p>Let's turn your ideas into exceptional digital experiences</p>
         <Link :icon="faComment" :style="`cta`">Start a conversation</Link>
@@ -35,5 +35,9 @@ h2 {
 
 p {
   margin-bottom: 30px;
+}
+
+a {
+  display: inline-block;
 }
 </style>

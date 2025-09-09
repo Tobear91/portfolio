@@ -2,6 +2,11 @@
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import MethodItem from "./MethodItem.vue";
 import Form from "./Form.vue";
+import emailjs from "@emailjs/browser";
+
+const EMAILJS_KEY = import.meta.env.VITE_EMAILJS_KEY;
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 
 const methods = [
   {
@@ -10,6 +15,23 @@ const methods = [
     description: "contact@camille-hurtaud.fr",
   },
 ];
+
+const formSubmitHandle = async (event: SubmitEvent) => {
+  const formElements = event.target as HTMLFormElement;
+  const formData = new FormData(formElements);
+  const formDataObj = Object.fromEntries(formData.entries());
+
+  if (!formDataObj.company) {
+    try {
+      await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, formElements, {
+        publicKey: EMAILJS_KEY,
+      });
+      console.log("Success !!");
+    } catch (error) {
+      console.log("FAILED...", error);
+    }
+  }
+};
 </script>
 
 <template>
@@ -19,7 +41,7 @@ const methods = [
       <p class="col-12 col-sm-8 col-lg-6">Multiple ways to connect and start our collaboration</p>
     </div>
     <div class="row justify-content-center">
-      <div class="col-11 order-last col-lg-3 order-lg-first">
+      <div class="col-11 order-last col-lg-3 order-lg-first col-xl-2">
         <h3 class="text-center text-lg-start">Contact Methods</h3>
         <MethodItem v-for="(method, index) in methods" :key="index" :datas="method" />
         <h4 class="text-center text-lg-start">Social links</h4>
@@ -29,8 +51,8 @@ const methods = [
           <a href="#"><img src="/logos/github.png" width="70" alt="Github" /></a>
         </div>
       </div>
-      <div class="col-11 order-first offset-lg-1 col-lg-6 order-lg-last">
-        <Form />
+      <div class="col-11 order-first offset-lg-1 col-lg-6 order-lg-last col-xl-4">
+        <Form @submit.prevent="formSubmitHandle" />
       </div>
     </div>
   </section>
