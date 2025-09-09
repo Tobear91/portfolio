@@ -4,7 +4,7 @@
   <footer class="container-fluid">
     <div class="row justify-content-center align-content-center h-100">
       <div class="col-10 text-center text-lg-start">
-        <p>© 2025 Camille Hurtaud. All rights reserved.</p>
+        <p>© 2025 Camille Hurtaud. Tous droits réservés.</p>
       </div>
     </div>
   </footer>

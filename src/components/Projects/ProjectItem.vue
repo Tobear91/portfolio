@@ -4,6 +4,7 @@ import { faUpRightFromSquare, faCodeBranch } from "@fortawesome/free-solid-svg-i
 
 type Datas = {
   image: string;
+  width?: string;
   title: string;
   description: string;
   skills: Array<string>;
@@ -19,8 +20,8 @@ defineProps<{
 <template>
   <div class="skill-card">
     <div class="inner">
-      <div class="image">
-        <img :src="datas.image" :alt="datas.title" />
+      <div class="image" :class="datas.width ? 'align-items-center' : 'align-items-start'">
+        <img :src="datas.image" :alt="datas.title" :width="datas.width ?? '100%'" :height="datas.width ? 'auto' : '100%'" />
       </div>
       <div class="infos">
         <p class="title">{{ datas.title }}</p>
@@ -29,8 +30,8 @@ defineProps<{
           <span v-for="(skill, index) in datas.skills" :key="index">{{ skill }}</span>
         </div>
         <div class="links">
-          <a v-if="datas.github" :href="datas.github"><FontAwesomeIcon :icon="faCodeBranch" />Github</a>
-          <a v-if="datas.demo" :href="datas.demo"><FontAwesomeIcon :icon="faUpRightFromSquare" />Démo</a>
+          <a v-if="datas.github" :href="datas.github" target="_blank"><FontAwesomeIcon :icon="faCodeBranch" />Github</a>
+          <a v-if="datas.demo" :href="datas.demo" target="_blank"><FontAwesomeIcon :icon="faUpRightFromSquare" />Démo</a>
         </div>
       </div>
     </div>
@@ -59,12 +60,13 @@ defineProps<{
     }
 
     .image {
+      display: flex;
+      justify-content: center;
       overflow: hidden;
       height: 180px;
+      background: linear-gradient(135deg, rgba($main1, 0.1) 0%, rgba($main5, 0.1) 50%, rgba($main3, 0.1) 100%);
 
       img {
-        width: 100%;
-        height: 100%;
         object-fit: cover;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;

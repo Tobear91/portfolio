@@ -1,31 +1,28 @@
 <script lang="ts" setup>
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { faComment } from "@fortawesome/free-regular-svg-icons";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { presentation } from "../datas/texts";
 import Link from "./Core/Link.vue";
 </script>
 
 <template>
-  <section class="container-fluid">
+  <section class="container-fluid text-center">
     <div class="row justify-content-center">
       <div id="avatar">
-        <img src="/camille_hurtaud.jpeg" alt="Camille Hurtaud" />
+        <img :src="presentation.avatar" :alt="presentation.title" />
       </div>
-      <h1>Camille Hurtaud</h1>
-      <h2>Full-Stack Developer & UI/UX Designer</h2>
-      <p class="col-12 col-sm-8 col-lg-6">Crafting digital experiences that blend beautiful design with robust functionality. 5+ years building scalable web applications.</p>
+      <h1>{{ presentation.title }}</h1>
+      <h2>{{ presentation.subtitle }}</h2>
+      <p class="col-11 col-sm-8 col-lg-6">{{ presentation.description }}</p>
       <div id="cta" class="flex-column flex-md-row">
-        <Link :icon="faComment" :style="`cta`">Let's work together</Link>
-        <Link :icon="faArrowRight" :iconLeft="false">View projects</Link>
+        <Link href="#contact" :icon="faComment" :style="`cta`">{{ presentation.button1 }}</Link>
+        <Link href="#projets" :icon="faArrowRight" :iconLeft="false">{{ presentation.button2 }}</Link>
       </div>
     </div>
   </section>
 </template>
 
 <style lang="scss" scoped>
-section {
-  text-align: center;
-}
-
 #avatar {
   width: 100px;
   height: 100px;
@@ -55,6 +52,7 @@ h1 {
 
 h2 {
   font-size: 2rem;
+  font-weight: 600;
 }
 
 #cta {

@@ -23,7 +23,7 @@ import Button from "../Core/Button.vue";
       <textarea class="form-control" id="message" rows="3" name="message" required></textarea>
     </div>
     <div class="col-12">
-      <Button type="submit" :icon="faEnvelope" :style="`cta`">Send Message</Button>
+      <Button type="submit" :icon="faEnvelope" :style="`cta`">Envoyer le message</Button>
     </div>
   </form>
 </template>

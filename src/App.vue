@@ -11,10 +11,10 @@ import Footer from "./components/Footer.vue";
 <template>
   <Header />
   <Presentation />
-  <Skills />
+  <Skills id="competences" />
   <Discuss />
-  <Projects />
-  <Contact />
+  <Projects id="projets" />
+  <Contact id="contact" />
   <Footer />
 </template>
 

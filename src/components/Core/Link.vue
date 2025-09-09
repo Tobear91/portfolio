@@ -6,12 +6,13 @@ const { iconLeft = true, style = "light" } = defineProps<{
   icon?: IconDefinition;
   iconLeft?: boolean;
   style?: string;
+  href: string;
 }>();
 </script>
 
 <template>
-  <a v-if="iconLeft" :class="style" href="#"><FontAwesomeIcon v-if="icon" class="me-4" :icon="icon" /><slot></slot></a>
-  <a v-else :class="style" href="#"><slot></slot><FontAwesomeIcon v-if="icon" class="ms-4" :icon="icon" /></a>
+  <a v-if="iconLeft" :class="style" :href="href"><FontAwesomeIcon v-if="icon" class="me-4" :icon="icon" /><slot></slot></a>
+  <a v-else :class="style" :href="href"><slot></slot><FontAwesomeIcon v-if="icon" class="ms-4" :icon="icon" /></a>
 </template>
 
 <style lang="scss" scoped>

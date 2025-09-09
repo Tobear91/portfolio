@@ -1,23 +1,24 @@
 <script lang="ts" setup>
 import { faComment } from "@fortawesome/free-regular-svg-icons";
+import { navs } from "../datas/navs";
+import { socials } from "../datas/socials";
 import Link from "./Core/Link.vue";
 </script>
 
 <template>
   <header class="container-fluid">
-    <div class="row justify-content-center justify-content-md-between">
-      <div class="socials d-flex justify-content-center col-11 col-md-6 mb-4 mb-md-0">
-        <a href="#"><img src="/logos/malt.png" width="80" alt="Malt" /></a>
-        <a href="#"><img src="/logos/linkedin.png" width="80" alt="Linkedin" /></a>
-        <a href="#"><img src="/logos/github.png" width="80" alt="Github" /></a>
+    <div class="row justify-content-center py-4">
+      <div class="d-flex justify-content-center col-11 col-md-6 mb-4 mb-md-0">
+        <a v-for="(social, index) in socials" :href="social.href" :key="index" target="_blank"><img :src="social.src" :alt="social.alt" /></a>
       </div>
 
       <nav class="d-flex justify-content-center col-11 col-md-6">
-        <ul>
-          <li><a class="link" href="#">Skills</a></li>
-          <li><a class="link" href="#">Projets</a></li>
+        <ul class="d-flex align-items-center m-0 p-0">
+          <li v-for="(nav, index) in navs" :key="index">
+            <a :href="nav.href">{{ nav.name }}</a>
+          </li>
           <li>
-            <Link :icon="faComment" :style="`cta`">Contact</Link>
+            <Link href="#contact" :icon="faComment" :style="`cta`">Contact</Link>
           </li>
         </ul>
       </nav>
@@ -26,32 +27,31 @@ import Link from "./Core/Link.vue";
 </template>
 
 <style lang="scss" scoped>
+$gap: 20px;
+$logo-width: 80px;
+
 header {
   border-bottom: 1px solid #efefef;
 
-  & > .row {
-    padding: 20px 0;
+  // Socials
+  & > .row > div:first-child {
+    gap: $gap;
+
+    img {
+      width: $logo-width;
+    }
   }
 
-  span {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: $main1;
-  }
-
+  // Navigation
   nav {
     ul {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      padding: 0;
-      margin: 0;
+      gap: $gap;
 
       li {
         list-style-type: none;
         font-size: 1.4rem;
 
-        .link {
+        a {
           color: $main2;
           transition: all 0.1s ease-in;
           text-decoration: none;
@@ -69,9 +69,5 @@ header {
       }
     }
   }
-}
-
-.socials {
-  gap: 20px;
 }
 </style>

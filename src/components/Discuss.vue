@@ -1,15 +1,16 @@
 <script lang="ts" setup>
 import { faComment } from "@fortawesome/free-regular-svg-icons";
 import Link from "./Core/Link.vue";
+import { discuss } from "../datas/texts";
 </script>
 
 <template>
   <section class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-10 col-md-9 col-lg-7 col-xl-5 inner">
-        <h2>Ready to Discuss Your Project?</h2>
-        <p>Let's turn your ideas into exceptional digital experiences</p>
-        <Link :icon="faComment" :style="`cta`">Start a conversation</Link>
+        <h2>{{ discuss.title }}</h2>
+        <p>{{ discuss.subtitle }}</p>
+        <Link href="#contact" :icon="faComment" :style="`cta`">{{ discuss.button }}</Link>
       </div>
     </div>
   </section>

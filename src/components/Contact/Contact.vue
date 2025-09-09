@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import MethodItem from "./MethodItem.vue";
-import Form from "./Form.vue";
 import emailjs from "@emailjs/browser";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { contact } from "../../datas/texts";
+import Form from "./Form.vue";
+import MethodItem from "./MethodItem.vue";
 
 const EMAILJS_KEY = import.meta.env.VITE_EMAILJS_KEY;
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
@@ -37,14 +38,14 @@ const formSubmitHandle = async (event: SubmitEvent) => {
 <template>
   <section class="container-fluid">
     <div class="row justify-content-center">
-      <h2>Get In Touch</h2>
-      <p class="col-12 col-sm-8 col-lg-6">Multiple ways to connect and start our collaboration</p>
+      <h2>{{ contact.title }}</h2>
+      <p class="col-12 col-sm-8 col-lg-6">{{ contact.subtitle }}</p>
     </div>
     <div class="row justify-content-center">
       <div class="col-11 order-last col-lg-3 order-lg-first col-xl-2">
-        <h3 class="text-center text-lg-start">Contact Methods</h3>
+        <h3 class="text-center text-lg-start">Contact</h3>
         <MethodItem v-for="(method, index) in methods" :key="index" :datas="method" />
-        <h4 class="text-center text-lg-start">Social links</h4>
+        <h4 class="text-center text-lg-start">Réseaux pro</h4>
         <div class="socials d-flex justify-content-center justify-content-lg-start">
           <a href="#"><img src="/logos/malt.png" width="70" alt="Malt" /></a>
           <a href="#"><img src="/logos/linkedin.png" width="70" alt="Linkedin" /></a>
