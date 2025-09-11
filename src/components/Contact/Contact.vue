@@ -1,11 +1,14 @@
 <script lang="ts" setup>
 import emailjs from "@emailjs/browser";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { useReCaptcha } from "vue-recaptcha-v3";
 import { contact } from "../../datas/texts";
 import Form from "./Form.vue";
 import MethodItem from "./MethodItem.vue";
+import { ref } from "vue";
+const { executeRecaptcha } = useReCaptcha()!;
 
-const EMAILJS_KEY = import.meta.env.VITE_EMAILJS_KEY;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 
@@ -17,21 +20,46 @@ const methods = [
   },
 ];
 
-const formSubmitHandle = async (event: SubmitEvent) => {
-  const formElements = event.target as HTMLFormElement;
-  const formData = new FormData(formElements);
-  const formDataObj = Object.fromEntries(formData.entries());
+const isSending = ref<boolean>(false);
+const state = ref<string | null>(null);
 
-  if (!formDataObj.company) {
-    try {
-      await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, formElements, {
-        publicKey: EMAILJS_KEY,
-      });
-      console.log("Success !!");
-    } catch (error) {
-      console.log("FAILED...", error);
-    }
+const isRecaptchaSuccess = async () => {
+  const token = await executeRecaptcha("submit");
+
+  const respCaptcha = await fetch("http://localhost:3000/recaptcha-verify", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ token }),
+  });
+
+  const { success } = await respCaptcha.json();
+  return success;
+};
+
+const formSubmitHandle = async (event: SubmitEvent) => {
+  isSending.value = true;
+  if (!isRecaptchaSuccess()) return;
+
+  const formElements = event.target as HTMLFormElement;
+
+  const sendEmail = await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, formElements, {
+    publicKey: EMAILJS_PUBLIC_KEY,
+  });
+
+  if (sendEmail.status === 200) {
+    state.value = "success";
+    isSending.value = false;
+    formElements.reset();
+  } else {
+    state.value = "error";
+    isSending.value = false;
   }
+
+  setTimeout(() => {
+    state.value = null;
+  }, 3000);
 };
 </script>
 
@@ -53,7 +81,7 @@ const formSubmitHandle = async (event: SubmitEvent) => {
         </div>
       </div>
       <div class="col-11 order-first offset-lg-1 col-lg-6 order-lg-last col-xl-4">
-        <Form @submit.prevent="formSubmitHandle" />
+        <Form @submit.prevent="formSubmitHandle" :isSending="isSending" :state="state" />
       </div>
     </div>
   </section>

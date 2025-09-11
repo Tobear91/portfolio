@@ -1,6 +1,12 @@
 <script lang="ts" setup>
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faEnvelope, faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import Button from "../Core/Button.vue";
+
+const { isSending = false, state = null } = defineProps<{
+  isSending?: boolean;
+  state?: string | null;
+}>();
 </script>
 
 <template>
@@ -22,8 +28,13 @@ import Button from "../Core/Button.vue";
       <label for="message" class="form-label">Message *</label>
       <textarea class="form-control" id="message" rows="3" name="message" required></textarea>
     </div>
+    <div class="col-12 notifications">
+      <div v-if="state === 'success'" class="alert alert-success" role="alert"><FontAwesomeIcon class="me-4" :icon="faCircleCheck" />Le message est envoyé</div>
+      <div v-if="state === 'danger'" class="alert alert-danger" role="alert"><FontAwesomeIcon class="me-4" :icon="faCircleXmark" />Une erreur est survenue</div>
+    </div>
     <div class="col-12">
-      <Button type="submit" :icon="faEnvelope" :style="`cta`">Envoyer le message</Button>
+      <Button v-if="isSending" type="submit" :style="`cta`"><span v-if="isSending" class="loader"></span>Envoi en cours</Button>
+      <Button v-else type="submit" :icon="faEnvelope" :style="`cta`">Envoyer le message</Button>
     </div>
   </form>
 </template>
@@ -46,5 +57,41 @@ form {
 *:focus {
   border: 1px solid $main5;
   box-shadow: none;
+}
+
+.loader {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 3px solid #fff;
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .loader {
+    margin-right: 15px;
+  }
+
+  &:hover {
+    .loader {
+      border-top: 3px solid $main5;
+    }
+  }
 }
 </style>
