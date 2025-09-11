@@ -26,7 +26,7 @@ const state = ref<string | null>(null);
 const isRecaptchaSuccess = async () => {
   const token = await executeRecaptcha("submit");
 
-  const respCaptcha = await fetch("http://localhost:3000/recaptcha-verify", {
+  const respCaptcha = await fetch("https://jarvis-tau-opal.vercel.app/recaptcha-verify", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
